@@ -563,6 +563,37 @@ body {
     color: var(--dark-color);
 }
 
+/* Icon colors */
+
+.skill.html .skill-icon i {
+    color: #e44d26; 
+}
+
+.skill.css .skill-icon i {
+    color: #264de4; 
+}
+
+.skill.js .skill-icon i {
+    color: #f7df1e; 
+}
+
+.skill.bootstrap .skill-icon i {
+    color: #7952b3; 
+}
+
+.skill.python .skill-icon i {
+    color: #306998; 
+}
+
+.skill.flutter .skill-icon i {
+    color: #02569B;
+}
+
+.skill.java .skill-icon i {
+    color: #b07219; 
+}
+
+
 .progress-container {
     width: 100%;
     background: #e0e0e0;
