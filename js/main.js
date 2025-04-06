@@ -13,7 +13,7 @@ window.addEventListener('scroll', function() {
 function goToExplore(){
     const myButton = document.getElementById('my_button');
     myButton.addEventListener('click',()=>{
-        window.location.href = "html/projects.html";
+        window.location.href = "./html/projects.html";
     });
     
 }
