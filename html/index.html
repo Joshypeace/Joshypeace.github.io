@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#03cffc">
+    <title>Josh Chilapondwa | Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://kit.fontawesome.com/d3233c583a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    
+    <div class="bg-elements">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+  
+    <nav class="navbar navbar-custom navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand animate__animated animate__fadeIn" href="index.html">Josh Chilapondwa</a>
+            <button class="hamburger animate__animated animate__fadeIn" onclick="toggleMenu()" aria-label="Toggle navigation">
+                <span class="bar bar1"></span>
+                <span class="bar bar2"></span>
+                <span class="bar bar3"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto nav-list">
+                    <li class="nav-item"><a class="nav-link animate__animated" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link animate__animated" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link animate__animated" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link animate__animated" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+  
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="animate__animated animate__fadeInDown">Welcome to My Portfolio</h1>
+            <div class="typewriter-container">
+                <p class="typewriter-text">I'm a passionate software developer</p>
+            </div>
+            <button onclick = "goToExplore()" id="my_button" class="hero-btn animate__animated animate__fadeInUp animate__delay-1s">
+                Explore My Work
+                <span class="btn-arrow">→</span>
+            </button>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow-down"></div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section class="about-section" id="about">
+        <div class="about-container">
+            <div class="about-img">
+                <img src="../assets/images/josh.jpeg" alt="Profile Image" class="profile-img">
+                <div class="img-border"></div>
+            </div>
+            <div class="about-text">
+                <h2>About <span>Me</span></h2>
+                <p>I'm a passionate software developer with a love for creating dynamic and responsive web and mobile applications. 
+                I specialize in flutter and Java for mobile development, python and its frameworks as well as Bootstrap(HTML and CSS)
+                for developing web applications.</p>
+                <div class="social-links">
+                    <a href="https://github.com/Joshypeace" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="https://www.facebook.com/share/18tTw2BFbB/" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com/in/joshua-chilapondwa-20b778294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+        <div class="section-header">
+            <h2>My <span>Skills</span></h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="skills-container">
+       
+            <div class="skill html">
+                <div class="skill-icon">
+                    <i class="fab fa-html5"></i>
+                </div>
+                <h3>HTML</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 87%;"></div>
+                </div>
+            </div>
+            <div class="skill css">
+                <div class="skill-icon">
+                    <i class="fab fa-css3"></i>
+                </div>
+                <h3>CSS</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 85%;"></div>
+                </div>
+            </div>
+            <div class="skill js">
+                <div class="skill-icon">
+                    <i class="fab fa-js"></i>
+                </div>
+                <h3>JAVASCRIPT</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 35%;"></div>
+                </div>
+            </div>
+            <div class="skill bootstrap">
+                <div class="skill-icon">
+                    <i class="fab fa-bootstrap"></i>
+                </div>
+                <h3>BOOTSTRAP</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 60%;"></div>
+                </div>
+            </div>
+            <div class="skill python">
+                <div class="skill-icon">
+                    <i class="fab fa-python"></i>
+                </div>
+                <h3>PYTHON</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 80%;"></div>
+                </div>
+            </div>
+            <div class="skill flutter">
+                <div class="skill-icon">
+                    <i class="fab fa-flutter"></i>
+                </div>
+                <h3>FLUTTER</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 95%;"></div>
+                </div>
+            </div>
+            <div class="skill java">
+                <div class="skill-icon">
+                    <i class="fab fa-java"></i>
+                </div>
+                <h3>JAVA</h3>
+                <div class="progress-container">
+                    <div class="progress-bar" style="--progress: 30%;"></div>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+
+ 
+    <section class="projects-section" id="projects">
+        <div class="section-header">
+            <h2>My <span>Projects</span></h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="projects-container">
+           
+            <div class="project-card">
+                <div class="project-image-container">
+                    <img src="../assets/images/muse.jpg" alt="Project 1" class="project-image">
+                    <div class="project-overlay">
+                        <h3>Student Portal</h3>
+                        <p>Developed a web based student portal for Daeyang University.</p>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-links">
+                    
+                        <a href="https://github.com/Joshypeace/DyuniPortal" class="project-btn">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image-container">
+                    <img src="../assets/images/muse.jpg" alt="Project 1" class="project-image">
+                    <div class="project-overlay">
+                        <h3>Receipt Generator</h3>
+                        <p>A simple web receipt generator developed for LetsGoTravel.</p>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-links">
+                      
+                        <a href="https://github.com/Joshypeace/receipt-generator-project" class="project-btn">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image-container">
+                    <img src="../assets/images/muse.jpg" alt="Project 1" class="project-image">
+                    <div class="project-overlay">
+                        <h3>Project One</h3>
+                        <p>A cool web app that does amazing things.</p>
+                    </div>
+                </div>
+                <div class="project-content">
+                    <div class="project-links">
+                      
+                        <a href="#" class="project-btn">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </section>
+
+  <!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <div class="section-header">
+        <h2>Get In <span>Touch</span></h2>
+        <div class="section-divider"></div>
+        <p class="section-subtitle">Have a project in mind or want to collaborate? Feel free to reach out!</p>
+    </div>
+    
+    <div class="contact-container">
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <form id="contactForm" action="https://formspree.io/f/your-form-id" method="POST">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" required>
+                    <label for="name">Your Name</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Your Email</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" required>
+                    <label for="subject">Subject</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <div class="form-group">
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <label for="message">Your Message</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    Send Message
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            
+            <div id="formStatus" class="form-status"></div>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="contact-info">
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Email Me</h3>
+                    <a href="mailto:joshuachilapondwa2@gmail.com">joshuachilapondwa2@gmail.com</a>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Call Me</h3>
+                    <a href="tel:+265 985 975 835">+265 985 975 835</a>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Location</h3>
+                    <p>Lilongwe, Malawi</p>
+                </div>
+            </div>
+            
+            <div class="social-media">
+                <h3>Connect With Me</h3>
+                <div class="social-links">
+                    <a href="https://github.com/Joshypeace" class="social-icon" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/joshua-chilapondwa-20b778294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="social-icon" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/18tTw2BFbB/" class="social-icon" aria-label="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/josh_ypeace?igsh=NTM0YXVtNnM3eTg3" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; <span id="year"></span> Josh Chilapondwa. All Rights Reserved.</p>
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+</footer>
+
+
+
+
+   
+    <div id="sideMenu" class="side-menu">
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <a href="#about" onclick="toggleMenu()">About</a>
+        <a href="#skills" onclick="toggleMenu()">Skills</a>
+        <a href="#projects" onclick="toggleMenu()">Projects</a>
+        <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+    
+    <script src="https://kit.fontawesome.com/d3233c583a.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
