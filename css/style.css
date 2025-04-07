@@ -623,7 +623,7 @@ body {
 .css .progress-bar { background: #264de4; }
 .js .progress-bar { background: #f7df1e; }
 .bootstrap .progress-bar { background: #563d7c; }
-.python .progress-bar { background: linear-gradient(90deg, #111c4a, gold); }
+.python .progress-bar { background: linear-gradient(90deg, #306998, gold); }
 .flutter .progress-bar { background: linear-gradient(90deg, rgb(0, 140, 255),rgb(212, 208, 208),rgb(11, 137, 255))}
 .java .progress-bar { background: linear-gradient(90deg, black, purple); }
 /* ===== Projects Section ===== */
@@ -786,7 +786,15 @@ body {
     .hamburger {
         display: block;
     }
-    
+   
+    .navbar-custom.scrolled .hamburger .bar {
+        background-color: black;
+    }
+
+    .navbar-custom.scrolled .hamburger:hover .bar {
+        background-color: var(--secondary-color);
+    }
+
     .hero h1 {
         font-size: 2.5rem;
     }
@@ -1443,7 +1451,7 @@ body {
 
 /* COMPLETE MEDIA QUERIES OVERRIDE */
 
-/* ===== Global Mobile Responsiveness ===== */
+
 @media (max-width: 767px) {
     /* Base adjustments */
     body {
