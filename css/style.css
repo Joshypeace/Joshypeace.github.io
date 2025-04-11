@@ -731,7 +731,7 @@ body {
     flex: 1;
     padding: 8px 15px;
     text-align: center;
-    background: var(--primarycolor);
+    background: var(--primary-color);
     color: white;
     text-decoration: none;
     border-radius: 5px;
