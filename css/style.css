@@ -679,7 +679,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(3, 207, 252, 0.8);
+    background: rgba(10, 10, 10, 0.8);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1259,7 +1259,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(3, 207, 252, 0.9);
+    background: rgba(36, 80, 94, 0.9);
     color: white;
     display: flex;
     flex-direction: column;
@@ -1286,6 +1286,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
+    margin-top: 15px;
 }
 
 .project-tech span {
