@@ -73,29 +73,52 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    animateOnScroll();
-    
-    // Animate progress bars
+document.addEventListener('DOMContentLoaded', function () {
+    const skillsSection = document.querySelector('.skills-section');
+    const skills = document.querySelectorAll('.skill');
     const progressBars = document.querySelectorAll('.progress-bar');
-    progressBars.forEach(bar => {
-        const progress = bar.style.getPropertyValue('--progress');
-        bar.style.width = progress;
-        bar.setAttribute('data-progress', progress);
-    });
-    
-
-
-
-    // Add hover effect to project cards
     const projectCards = document.querySelectorAll('.project-card');
+
+    function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return (
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight)
+        );
+    }
+
+    function animateSections() {
+        // Animate Skills
+        if (skillsSection && isInViewport(skillsSection)) {
+            skillsSection.classList.add('show');
+            skills.forEach(skill => skill.classList.add('show'));
+            progressBars.forEach(bar => {
+                const progress = bar.style.getPropertyValue('--progress');
+                bar.style.width = progress;
+                bar.setAttribute('data-progress', progress);
+            });
+        }
+
+        // Animate Projects
+        projectCards.forEach(card => {
+            if (isInViewport(card)) {
+                card.classList.add('show');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', animateSections);
+    animateSections(); // Run once on load
+
+    // Project card hover effect (safe)
     projectCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.querySelector('.project-overlay').style.opacity = '1';
+            const overlay = this.querySelector('.project-overlay');
+            if (overlay) overlay.style.opacity = '1';
         });
-        
+
         card.addEventListener('mouseleave', function() {
-            this.querySelector('.project-overlay').style.opacity = '0';
+            const overlay = this.querySelector('.project-overlay');
+            if (overlay) overlay.style.opacity = '0';
         });
     });
 });

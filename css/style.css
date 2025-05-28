@@ -487,12 +487,22 @@ body {
 }
 
 /* ===== Skills Section ===== */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
 .skills-section {
     padding: 100px 10%;
     background: #f8f9fa;
     text-align: center;
     opacity: 0;
     animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+.skills-section.show {
+    opacity: 1;
 }
 
 .section-header {
@@ -543,10 +553,6 @@ body {
     transform: translateY(0);
 } 
 
-.skills-section.show .progress-bar{
-    width: var(--progress);
-}
-
 .skill-icon {
     font-size: 3rem;
     margin-bottom: 20px;
@@ -564,35 +570,13 @@ body {
 }
 
 /* Icon colors */
-
-.skill.html .skill-icon i {
-    color: #e44d26; 
-}
-
-.skill.css .skill-icon i {
-    color: #264de4; 
-}
-
-.skill.js .skill-icon i {
-    color: #f7df1e; 
-}
-
-.skill.bootstrap .skill-icon i {
-    color: #7952b3; 
-}
-
-.skill.python .skill-icon i {
-    color: #306998; 
-}
-
-.skill.flutter .skill-icon i {
-    color: #02569B;
-}
-
-.skill.java .skill-icon i {
-    color: #b07219; 
-}
-
+.skill.html .skill-icon i { color: #e44d26; }
+.skill.css .skill-icon i { color: #264de4; }
+.skill.js .skill-icon i { color: #f7df1e; }
+.skill.bootstrap .skill-icon i { color: #7952b3; }
+.skill.python .skill-icon i { color: #306998; }
+.skill.flutter .skill-icon i { color: #02569B; }
+.skill.java .skill-icon i { color: #b07219; }
 
 .progress-container {
     width: 100%;
@@ -603,6 +587,7 @@ body {
 }
 
 .progress-bar {
+    width: 0;
     height: 100%;
     border-radius: 20px;
     position: relative;
@@ -624,7 +609,7 @@ body {
 .js .progress-bar { background: #f7df1e; }
 .bootstrap .progress-bar { background: #563d7c; }
 .python .progress-bar { background: linear-gradient(90deg, #306998, gold); }
-.flutter .progress-bar { background: linear-gradient(90deg, rgb(0, 140, 255),rgb(212, 208, 208),rgb(11, 137, 255))}
+.flutter .progress-bar { background: linear-gradient(90deg, rgb(0, 140, 255),rgb(212, 208, 208),rgb(11, 137, 255)); }
 .java .progress-bar { background: linear-gradient(90deg, black, purple); }
 /* ===== Projects Section ===== */
 .projects-section {
