@@ -23,6 +23,215 @@ body {
     position: relative;
 }
 
+/* ===== Theme Toggle Button ===== */
+.theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: var(--transition);
+}
+
+.theme-toggle i {
+    position: absolute;
+    transition: var(--transition);
+}
+
+.theme-toggle .fa-sun {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.navbar-custom.scrolled .theme-toggle {
+    color: var(--dark-color);
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    --dark-color: #f0f0f0;
+    --light-color: #121212;
+    --text-color: #e0e0e0;
+    background: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .navbar-custom {
+    background: #1e1e1e;
+}
+
+body.dark-mode .navbar-custom.scrolled {
+    background: rgba(30, 30, 30, 0.95);
+}
+
+body.dark-mode .about-section,
+body.dark-mode .skills-section,
+body.dark-mode .projects-section,
+body.dark-mode .contact-section,
+body.dark-mode .projects-grid-section{
+    background: #1e1e1e;
+}
+
+body.dark-mode .skill,
+body.dark-mode .project-card,
+body.dark-mode .contact-form,
+body.dark-mode .info-card,
+body.dark-mode .social-media,
+body.dark-mode .project-item,
+body.dark-mode .projects-cta
+{
+    background: #2d2d2d;
+    color: #e0e0e0;
+}
+
+body.dark-mode .skill h3,
+body.dark-mode .project-info h3,
+body.dark-mode .info-content h3,
+body.dark-mode .social-media h3 {
+    color: #f0f0f0;
+}
+
+body.dark-mode .project-overlay {
+    background: rgba(30, 30, 30, 0.9);
+}
+
+body.dark-mode .footer {
+    background: #1e1e1e;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    color: #e0e0e0;
+    border-bottom-color: #444;
+}
+
+body.dark-mode .form-group label {
+    color: #aaa;
+}
+
+body.dark-mode .theme-toggle .fa-moon {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+body.dark-mode .theme-toggle .fa-sun {
+    opacity: 1;
+    transform: rotate(0);
+}
+
+/* Side menu theme toggle */
+.side-menu-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Dark mode specific adjustments */
+body.dark-mode .progress-container {
+    background: #444;
+}
+
+body.dark-mode .project-btn {
+    color: white;
+}
+
+body.dark-mode .section-divider {
+    background: var(--primary-color);
+}
+
+body.dark-mode .img-border {
+    border-color: var(--primary-color);
+}
+
+body.dark-mode .social-icon {
+    background: #444;
+    color: white;
+}
+
+body.dark-mode .social-icon:hover {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Mobile theme toggle */
+@media (max-width: 991px) {
+    .theme-toggle {
+        margin-right: 0;
+        margin-left: auto;
+        display: none;
+    }
+
+    .project-nav .container-fluid .theme-toggle{
+        display: block;
+        position: relative;
+        bottom: 0.6rem;
+    }
+    
+    .side-menu-theme-toggle {
+        margin-top: 20px;
+    }
+}
+
 /* Background Elements */
 .bg-elements {
     position: fixed;
@@ -610,7 +819,7 @@ body {
 .bootstrap .progress-bar { background: #563d7c; }
 .python .progress-bar { background: linear-gradient(90deg, #306998, gold); }
 .flutter .progress-bar { background: linear-gradient(90deg, rgb(0, 140, 255),rgb(212, 208, 208),rgb(11, 137, 255)); }
-.java .progress-bar { background: linear-gradient(90deg, black, purple); }
+.java .progress-bar { background: rgb(165, 97, 42) }
 /* ===== Projects Section ===== */
 .projects-section {
     padding: 100px 10%;

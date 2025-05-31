@@ -348,3 +348,58 @@ function adjustScrollIndicator() {
 window.addEventListener('load', adjustScrollIndicator);
 window.addEventListener('resize', adjustScrollIndicator);
 
+// Theme Toggle Functionality
+const themeToggle = document.querySelector('.theme-toggle');
+const themeSwitch = document.querySelector('.theme-switch input');
+
+// Check for saved theme preference or use preferred color scheme
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme') || 
+                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    if (themeSwitch) themeSwitch.checked = savedTheme === 'dark';
+    updateThemeIcon();
+}
+
+// Update theme toggle icon
+function updateThemeIcon() {
+    const isDark = document.body.classList.contains('dark-mode');
+    const moonIcon = document.querySelector('.theme-toggle .fa-moon');
+    const sunIcon = document.querySelector('.theme-toggle .fa-sun');
+    
+    if (moonIcon && sunIcon) {
+        moonIcon.style.opacity = isDark ? '0' : '1';
+        moonIcon.style.transform = isDark ? 'rotate(-90deg)' : 'rotate(0)';
+        sunIcon.style.opacity = isDark ? '1' : '0';
+        sunIcon.style.transform = isDark ? 'rotate(0)' : 'rotate(90deg)';
+    }
+}
+
+// ====================DARK MODE===============================
+
+// Toggle theme
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcon();
+}
+
+// Event listeners
+if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+}
+
+if (themeSwitch) {
+    themeSwitch.addEventListener('change', toggleTheme);
+}
+
+// Initialize theme on load
+document.addEventListener('DOMContentLoaded', loadTheme);
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+        loadTheme();
+    }
+});

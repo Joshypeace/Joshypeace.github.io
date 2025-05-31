@@ -34,6 +34,10 @@
     <nav class="navbar navbar-custom navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand animate__animated animate__fadeIn" href="index.html">Josh Chilapondwa</a>
+            <button class="theme-toggle" aria-label="Toggle theme">
+             <i class="fas fa-moon"></i>
+           <i class="fas fa-sun"></i>
+           </button>
             <button class="hamburger animate__animated animate__fadeIn" onclick="toggleMenu()" aria-label="Toggle navigation">
                 <span class="bar bar1"></span>
                 <span class="bar bar2"></span>
@@ -346,6 +350,13 @@
    
     <div id="sideMenu" class="side-menu">
         <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <div class="side-menu-theme-toggle">
+        <span>Dark Mode</span>
+        <label class="theme-switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+        </label>
+        </div>
         <a href="#about" onclick="toggleMenu()">About</a>
         <a href="#skills" onclick="toggleMenu()">Skills</a>
         <a href="#projects" onclick="toggleMenu()">Projects</a>
