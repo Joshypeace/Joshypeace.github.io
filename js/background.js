@@ -3,11 +3,14 @@
 // structures mark each section. Scrolling flies the camera forward through the tunnel and
 // shifts the palette per section. A CSS overlay (.bg-overlay) keeps the page content readable.
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+// Loaded dynamically so a blocked or failed CDN request still triggers the CSS fallback.
+const THREE_URL = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+let THREE;
 
 const canvas = document.getElementById('bg-canvas');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const small = window.innerWidth < 760;
+const small = window.innerWidth < 760; // sets object counts once; layout reacts to resizes
+const FRAME_INTERVAL = small ? 1000 / 30 : 0; // cap phones at 30fps to save battery
 
 const BG_COLOR = 0x05070d;
 const START_Z = 12;
@@ -24,14 +27,15 @@ const TOKENS = {
 const CATEGORIES = Object.keys(TOKENS);
 
 // One palette per page section: keyword, type, punct, literal, structure.
-const PALETTES = [
+const PALETTE_HEX = [
     ['#c084fc', '#22d3ee', '#64748b', '#86efac', '#22d3ee'], // hero
     ['#a78bfa', '#818cf8', '#64748b', '#f0abfc', '#a78bfa'], // about
     ['#60a5fa', '#38bdf8', '#64748b', '#93c5fd', '#3b82f6'], // github
     ['#34d399', '#2dd4bf', '#64748b', '#bef264', '#34d399'], // stack
     ['#fbbf24', '#fb923c', '#64748b', '#fde68a', '#f59e0b'], // work
     ['#f472b6', '#22d3ee', '#64748b', '#c4b5fd', '#ec4899']  // contact
-].map(p => p.map(c => new THREE.Color(c)));
+];
+let PALETTES;
 
 function fontsReady() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
@@ -117,6 +121,14 @@ function buildStructure(kind) {
 }
 
 async function init() {
+    try {
+        THREE = await import(THREE_URL);
+    } catch (e) {
+        document.documentElement.classList.add('no-webgl');
+        return;
+    }
+    PALETTES = PALETTE_HEX.map(p => p.map(c => new THREE.Color(c)));
+
     let renderer;
     try {
         renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, powerPreference: 'low-power' });
@@ -194,13 +206,22 @@ async function init() {
     // One wireframe structure per section, spaced along the camera path
     const structures = PALETTES.map((_, i) => {
         const group = buildStructure(i);
-        const side = i % 2 === 0 ? 1 : -1;
-        const x = small ? side * 2.2 : side * 6.5;
-        const y = small ? 2.5 : rand(-0.5, 1.5);
-        group.position.set(x, y, START_Z - 14 - i * (PATH_LENGTH / (PALETTES.length - 1)) * 0.92);
+        group.userData.lift = rand(-0.5, 1.5);
+        group.position.z = START_Z - 14 - i * (PATH_LENGTH / (PALETTES.length - 1)) * 0.92;
         scene.add(group);
         return group;
     });
+
+    // Narrow screens pull the structures toward the centre and up, above the text.
+    function placeStructures() {
+        const narrow = window.innerWidth < 760;
+        structures.forEach((group, i) => {
+            const side = i % 2 === 0 ? 1 : -1;
+            group.position.x = side * (narrow ? 2.2 : 6.5);
+            group.position.y = narrow ? 2.5 : group.userData.lift;
+        });
+    }
+    placeStructures();
 
     // ----- Scroll → camera + palette -----
     const sectionEls = Array.from(document.querySelectorAll('[data-section]'));
@@ -266,29 +287,45 @@ async function init() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight, false);
+        placeStructures();
+        relayout();
+    }
+
+    function relayout() {
         measure();
         updateTargets();
         requestRender();
     }
+
     window.addEventListener('resize', onResize);
-    window.addEventListener('load', onResize);
+    // Page height changes after load (fonts, images, live GitHub data), so re-measure on any resize of the content.
+    if ('ResizeObserver' in window) new ResizeObserver(relayout).observe(document.body);
     window.addEventListener('scroll', () => { updateTargets(); requestRender(); }, { passive: true });
 
     // ----- Render loop -----
     const clock = new THREE.Clock();
     let running = false;
     let frame = 0;
+    let lastFrame = 0;
 
-    function render() {
+    function render(now) {
+        if (FRAME_INTERVAL && now - lastFrame < FRAME_INTERVAL - 1) {
+            frame = requestAnimationFrame(render);
+            return;
+        }
+        lastFrame = now;
+
+        // Reduced motion: no fly-through or pointer parallax; only the palette follows the section.
         const still = reducedMotion.matches;
+        const goal = still ? { z: START_Z, mx: 0, my: 0 } : target;
         const dt = Math.min(clock.getDelta(), 0.05);
         const time = clock.elapsedTime;
         const ease = still ? 1 : 1 - Math.pow(0.0015, dt); // frame-rate independent smoothing
 
-        current.z += (target.z - current.z) * ease;
+        current.z += (goal.z - current.z) * ease;
         current.section += (target.section - current.section) * ease;
-        current.mx += (target.mx - current.mx) * ease * 0.6;
-        current.my += (target.my - current.my) * ease * 0.6;
+        current.mx += (goal.mx - current.mx) * ease * 0.6;
+        current.my += (goal.my - current.my) * ease * 0.6;
 
         camera.position.set(current.mx * 0.9, -current.my * 0.6, current.z);
         camera.rotation.set(-current.my * 0.03, -current.mx * 0.05, Math.sin(current.z * 0.03) * 0.04);
@@ -310,10 +347,10 @@ async function init() {
         applyPalette(current.section);
         renderer.render(scene, camera);
 
-        const settled = Math.abs(target.z - current.z) < 0.001 &&
+        const settled = Math.abs(goal.z - current.z) < 0.001 &&
             Math.abs(target.section - current.section) < 0.001 &&
-            Math.abs(target.mx - current.mx) < 0.001 &&
-            Math.abs(target.my - current.my) < 0.001;
+            Math.abs(goal.mx - current.mx) < 0.001 &&
+            Math.abs(goal.my - current.my) < 0.001;
 
         // With reduced motion we only draw when something changes.
         if (document.hidden || (still && settled)) {
@@ -339,6 +376,13 @@ async function init() {
         }
     });
     reducedMotion.addEventListener?.('change', requestRender);
+
+    canvas.addEventListener('webglcontextlost', e => {
+        e.preventDefault();
+        cancelAnimationFrame(frame);
+        running = true; // block further frames on the dead context
+        document.documentElement.classList.add('no-webgl');
+    });
 
     measure();
     updateTargets();

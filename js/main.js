@@ -33,15 +33,27 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    function setMenu(open) {
+    const behindMenu = [document.getElementById('main'), document.querySelector('.footer')];
+
+    function setMenu(open, { restoreFocus = false } = {}) {
+        const wasOpen = document.body.classList.contains('menu-open');
         document.body.classList.toggle('menu-open', open);
         menuToggle.setAttribute('aria-expanded', String(open));
         menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        // Keep keyboard focus inside the overlay while it covers the page.
+        behindMenu.forEach(el => { if (el) el.inert = open; });
+        if (open && !wasOpen) mobileMenu.querySelector('a').focus();
+        if (!open && wasOpen && restoreFocus) menuToggle.focus();
     }
 
-    menuToggle.addEventListener('click', () => setMenu(!document.body.classList.contains('menu-open')));
+    menuToggle.addEventListener('click', () => {
+        const open = !document.body.classList.contains('menu-open');
+        setMenu(open, { restoreFocus: !open });
+    });
     mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && document.body.classList.contains('menu-open')) setMenu(false, { restoreFocus: true });
+    });
     window.addEventListener('resize', () => { if (window.innerWidth > 860) setMenu(false); });
 
     // Highlight the nav link of the section currently in view.
@@ -132,11 +144,14 @@
         return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
+    // Portfolio repos would only ever list themselves.
+    const HIDDEN_REPOS = ['joshypeace.github.io', 'joshua-chilapondwa-portfolio'];
+
     function renderRecent(repos) {
         const list = document.getElementById('recentRepos');
         if (!list) return;
         const recent = repos
-            .filter(r => !r.fork)
+            .filter(r => !r.fork && !HIDDEN_REPOS.includes(r.name.toLowerCase()))
             .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
             .slice(0, 4);
         if (!recent.length) return;
@@ -149,7 +164,7 @@
     }
 
     async function loadGitHub() {
-        const cacheKey = 'gh-profile-v1';
+        const cacheKey = 'gh-profile-v2';
         let data = null;
 
         try {

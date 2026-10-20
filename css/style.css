@@ -11,7 +11,7 @@
     --border-strong: rgba(148, 163, 184, 0.28);
     --text: #e6edf6;
     --text-muted: #94a3b8;
-    --text-dim: #64748b;
+    --text-dim: #7c8aa0;
     --accent: #22d3ee;
     --accent-2: #a78bfa;
     --accent-3: #34d399;
@@ -482,15 +482,16 @@ code {
     border-top: 1px solid var(--border);
 }
 
-.hero-stats div { margin: 0; }
-.hero-stats dt {
+.hero-stats div { margin: 0; display: flex; flex-direction: column-reverse; }
+.hero-stats dd {
     font-family: var(--font-mono);
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 700;
     color: var(--text);
     line-height: 1.1;
+    margin: 0;
 }
-.hero-stats dd {
+.hero-stats dt {
     margin: 6px 0 0;
     font-size: 0.82rem;
     color: var(--text-muted);
@@ -1185,6 +1186,7 @@ a.contact-card:hover { border-color: var(--accent); background: var(--surface-ho
 }
 @media (max-width: 520px) {
     .field-row { grid-template-columns: 1fr; }
+    .contact-card span { font-size: 0.85rem; }
     .contact-form .btn { justify-self: stretch; }
 }
 
