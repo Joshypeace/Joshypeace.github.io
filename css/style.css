@@ -990,7 +990,7 @@ code {
 .tag.live { color: var(--accent-3); border-color: rgba(52, 211, 153, 0.3); }
 .tag .status-dot { width: 6px; height: 6px; }
 
-.project h3 {
+.project h4 {
     font-size: clamp(1.3rem, 2.4vw, 1.6rem);
     margin-bottom: 12px;
 }
@@ -1213,7 +1213,7 @@ code {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
+    object-position: left top;
     transition: transform 0.6s var(--ease);
 }
 .client:hover .client-shot img { transform: scale(1.03); }
@@ -1225,7 +1225,7 @@ code {
     padding: 22px;
 }
 
-.client-body h3 {
+.client-body h4 {
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
@@ -1257,24 +1257,22 @@ code {
 }
 .client-featured .client-shot {
     flex: 0 0 52%;
-    aspect-ratio: auto;
-    min-height: 100%;
+    align-self: center;
     border-bottom: 0;
     border-right: 1px solid var(--border);
 }
 .client-featured .client-body { padding: clamp(22px, 3vw, 34px); }
-.client-featured h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
+.client-featured h4 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
 
 @media (max-width: 1000px) {
     .clients { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1000px) {
     .client-featured { flex-direction: column; }
     .client-featured .client-shot {
         flex: none;
-        aspect-ratio: 16 / 10;
-        min-height: 0;
+        align-self: stretch;
         border-right: 0;
         border-bottom: 1px solid var(--border);
     }
