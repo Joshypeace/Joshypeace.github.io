@@ -33,7 +33,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    const behindMenu = [document.getElementById('main'), document.querySelector('.footer')];
+    const behindMenu = [document.querySelector('.skip-link'), document.getElementById('main'), document.querySelector('.footer')];
 
     function setMenu(open, { restoreFocus = false } = {}) {
         const wasOpen = document.body.classList.contains('menu-open');
@@ -54,7 +54,7 @@
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape' && document.body.classList.contains('menu-open')) setMenu(false, { restoreFocus: true });
     });
-    window.addEventListener('resize', () => { if (window.innerWidth > 860) setMenu(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 960) setMenu(false); });
 
     // Highlight the nav link of the section currently in view.
     const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));

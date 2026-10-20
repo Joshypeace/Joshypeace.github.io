@@ -30,9 +30,10 @@ const CATEGORIES = Object.keys(TOKENS);
 const PALETTE_HEX = [
     ['#c084fc', '#22d3ee', '#64748b', '#86efac', '#22d3ee'], // hero
     ['#a78bfa', '#818cf8', '#64748b', '#f0abfc', '#a78bfa'], // about
+    ['#38bdf8', '#22d3ee', '#64748b', '#a5f3fc', '#06b6d4'], // experience
+    ['#fbbf24', '#fb923c', '#64748b', '#fde68a', '#f59e0b'], // work
     ['#60a5fa', '#38bdf8', '#64748b', '#93c5fd', '#3b82f6'], // github
     ['#34d399', '#2dd4bf', '#64748b', '#bef264', '#34d399'], // stack
-    ['#fbbf24', '#fb923c', '#64748b', '#fde68a', '#f59e0b'], // work
     ['#f472b6', '#22d3ee', '#64748b', '#c4b5fd', '#ec4899']  // contact
 ];
 let PALETTES;
@@ -84,7 +85,8 @@ function buildStructure(kind) {
         case 2: geometry = new THREE.BoxGeometry(4, 4, 4, 3, 3, 3); break;
         case 3: geometry = new THREE.OctahedronGeometry(3.2, 1); break;
         case 4: geometry = new THREE.TorusGeometry(2.8, 0.06, 6, 64); break;
-        default: geometry = new THREE.DodecahedronGeometry(3, 0);
+        case 5: geometry = new THREE.DodecahedronGeometry(3, 0); break;
+        default: geometry = new THREE.TetrahedronGeometry(3.2, 1);
     }
 
     const group = new THREE.Group();
@@ -307,6 +309,7 @@ async function init() {
     let running = false;
     let frame = 0;
     let lastFrame = 0;
+    let contextLost = false;
 
     function render(now) {
         if (FRAME_INTERVAL && now - lastFrame < FRAME_INTERVAL - 1) {
@@ -361,7 +364,7 @@ async function init() {
     }
 
     function requestRender() {
-        if (running) return;
+        if (running || contextLost) return;
         running = true;
         clock.getDelta(); // don't count idle time as one giant frame
         frame = requestAnimationFrame(render);
@@ -380,7 +383,8 @@ async function init() {
     canvas.addEventListener('webglcontextlost', e => {
         e.preventDefault();
         cancelAnimationFrame(frame);
-        running = true; // block further frames on the dead context
+        contextLost = true;
+        running = false;
         document.documentElement.classList.add('no-webgl');
     });
 
