@@ -33,7 +33,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    const behindMenu = [document.getElementById('main'), document.querySelector('.footer')];
+    const behindMenu = [document.querySelector('.skip-link'), document.getElementById('main'), document.querySelector('.footer')];
 
     function setMenu(open, { restoreFocus = false } = {}) {
         const wasOpen = document.body.classList.contains('menu-open');

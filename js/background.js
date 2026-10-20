@@ -307,6 +307,7 @@ async function init() {
     let running = false;
     let frame = 0;
     let lastFrame = 0;
+    let contextLost = false;
 
     function render(now) {
         if (FRAME_INTERVAL && now - lastFrame < FRAME_INTERVAL - 1) {
@@ -361,7 +362,7 @@ async function init() {
     }
 
     function requestRender() {
-        if (running) return;
+        if (running || contextLost) return;
         running = true;
         clock.getDelta(); // don't count idle time as one giant frame
         frame = requestAnimationFrame(render);
@@ -380,7 +381,8 @@ async function init() {
     canvas.addEventListener('webglcontextlost', e => {
         e.preventDefault();
         cancelAnimationFrame(frame);
-        running = true; // block further frames on the dead context
+        contextLost = true;
+        running = false;
         document.documentElement.classList.add('no-webgl');
     });
 

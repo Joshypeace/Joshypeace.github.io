@@ -22,7 +22,7 @@
     --tk-string: #86efac;
     --tk-number: #fbbf24;
     --tk-type: #67e8f9;
-    --tk-comment: #64748b;
+    --tk-comment: #7c8aa0;
 
     --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -272,6 +272,8 @@ strong, b { color: var(--text); font-weight: 600; }
         opacity: 1;
         visibility: visible;
         transform: none;
+        /* Become visible immediately on open so the first link can take focus. */
+        transition: opacity 0.25s ease, transform 0.25s var(--ease), visibility 0s;
     }
 }
 
