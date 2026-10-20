@@ -2,369 +2,457 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#03cffc">
-    <meta property="og:title" content="Josh Chilapondwa | Portfolio" />
-    <meta property="og:description" content="Portfolio page for Joshua Chilapondwa Full Stack Software Developer" />
-    <meta property="og:image" content="https://joshypeace.github.io/assets/images/josh.jpeg" />
-    <meta property="og:url" content="https://joshypeace.github.io/index.html" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="" />
-    <meta name="twitter:title" content="Josh Chilapondwa | Portfolio" />
-    <meta name="twitter:description" content="Portfolio page for Joshua Chilapondwa Full Stack Software Developer" />
-    <meta name="twitter:image" content="https://joshypeace.github.io/assets/images/josh.jpeg" />
-    <meta name="twitter:url" content="https://joshypeace.github.io/index.html" />
-    <link rel="icon" href="."   >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#05070d">
+    <meta name="description" content="Joshua Chilapondwa — full-stack software engineer in Lilongwe, Malawi. Production web platforms in TypeScript, Next.js and PostgreSQL, mobile apps in React Native and Flutter, and native Windows tools in C++/Qt.">
 
-    <title>Josh Chilapondwa | Portfolio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="https://kit.fontawesome.com/d3233c583a.js" crossorigin="anonymous"></script>
+    <meta property="og:title" content="Joshua Chilapondwa | Full-Stack Software Engineer">
+    <meta property="og:description" content="Production web platforms in TypeScript, Next.js and PostgreSQL, mobile apps in React Native and Flutter, and native Windows tools in C++/Qt.">
+    <meta property="og:image" content="https://joshypeace.github.io/assets/images/josh.jpeg">
+    <meta property="og:url" content="https://joshypeace.github.io/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Joshua Chilapondwa | Full-Stack Software Engineer">
+    <meta name="twitter:description" content="Production web platforms in TypeScript, Next.js and PostgreSQL, mobile apps in React Native and Flutter, and native Windows tools in C++/Qt.">
+    <meta name="twitter:image" content="https://joshypeace.github.io/assets/images/josh.jpeg">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070d'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='700' font-size='28' fill='%2322d3ee'%3E%26lt;/%26gt;%3C/text%3E%3C/svg%3E">
+
+    <title>Joshua Chilapondwa | Full-Stack Software Engineer</title>
+    <script>document.documentElement.classList.add('js');</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
-    <div class="bg-elements">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        <div class="circle circle-3"></div>
-    </div>
+    <!-- 3D code background + dark overlay keep the content readable -->
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="bg-overlay" aria-hidden="true"></div>
 
-  
-    <nav class="navbar navbar-custom navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand animate__animated animate__fadeIn" href="index.html">Josh Chilapondwa</a>
-            <button class="theme-toggle" aria-label="Toggle theme">
-             <i class="fas fa-moon"></i>
-           <i class="fas fa-sun"></i>
-           </button>
-            <button class="hamburger animate__animated animate__fadeIn" onclick="toggleMenu()" aria-label="Toggle navigation">
-                <span class="bar bar1"></span>
-                <span class="bar bar2"></span>
-                <span class="bar bar3"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto nav-list">
-                    <li class="nav-item"><a class="nav-link animate__animated" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link animate__animated" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link animate__animated" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link animate__animated" href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-  
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1 class="animate__animated animate__fadeInDown">Welcome to My Portfolio</h1>
-            <div class="typewriter-container">
-                <p class="typewriter-text">I'm a passionate software developer</p>
-            </div>
-            <button onclick = "goToExplore()" id="my_button" class="hero-btn animate__animated animate__fadeInUp animate__delay-1s">
-                Explore My Work
-                <span class="btn-arrow">→</span>
+    <header class="nav" id="nav">
+        <div class="nav-inner container">
+            <a class="brand" href="#home" aria-label="Joshua Chilapondwa, home">
+                <span class="brand-mark">&lt;/&gt;</span>
+                <span class="brand-name">joshua<span class="accent">.</span>chilapondwa</span>
+            </a>
+            <nav class="nav-links" aria-label="Primary">
+                <a href="#about">About</a>
+                <a href="#github">GitHub</a>
+                <a href="#stack">Stack</a>
+                <a href="#work">Work</a>
+                <a href="#contact" class="nav-cta">Let's talk</a>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+                <span></span><span></span><span></span>
             </button>
         </div>
-        <!-- <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <div class="arrow-down"></div>
-        </div> -->
-    </section>
+        <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+            <a href="#about">About</a>
+            <a href="#github">GitHub</a>
+            <a href="#stack">Stack</a>
+            <a href="#work">Work</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-    <!-- About Me Section -->
-    <section class="about-section" id="about">
-        <div class="about-container">
-            <div class="about-img">
-                <img src="../assets/images/josh.jpeg" alt="Profile Image" class="profile-img">
-                <div class="img-border"></div>
-            </div>
-            <div class="about-text">
-                <h2>About <span>Me</span></h2>
-                <p>I'm a passionate software developer with a love for creating dynamic and responsive web and mobile applications. 
-                I specialize in flutter and Java for mobile development, python and its frameworks as well as Bootstrap(HTML and CSS) and Javascript
-                for developing web applications.</p>
-                <div class="social-links">
-                    <a href="https://wa.me/265985975835" target="blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://github.com/Joshypeace" target="blank" class="social-icon"><i class="fab fa-github"></i></a>
-                    <a href="https://www.facebook.com/share/18tTw2BFbB/" target="blank" class="social-icon"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.linkedin.com/in/joshua-chilapondwa-20b778294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero section" id="home" data-section="0">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow reveal"><span class="status-dot"></span> Open to freelance &amp; full-time roles</p>
+                    <h1 class="reveal">I build software that <span class="gradient-text">runs real businesses.</span></h1>
+                    <p class="lead reveal">
+                        I'm Joshua Chilapondwa, a full-stack software engineer in Lilongwe, Malawi.
+                        I ship production web platforms in <strong>TypeScript, Next.js and PostgreSQL</strong>,
+                        mobile apps in <strong>React Native</strong> and <strong>Flutter</strong>, and native
+                        Windows tools in <strong>C++ / Qt</strong>.
+                    </p>
+                    <div class="hero-actions reveal">
+                        <a href="#work" class="btn btn-primary">View my work <i class="fas fa-arrow-right"></i></a>
+                        <a href="https://github.com/Joshypeace" target="_blank" rel="noopener" class="btn btn-ghost"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                    <dl class="hero-stats reveal">
+                        <div><dt>public repos</dt><dd data-stat="repos">16</dd></div>
+                        <div><dt>languages in use</dt><dd>14</dd></div>
+                        <div><dt>apps live in production</dt><dd>3</dd></div>
+                        <div><dt>shipping on GitHub since</dt><dd data-stat="since">2023</dd></div>
+                    </dl>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section class="skills-section" id="skills">
-        <div class="section-header">
-            <h2>My <span>Skills</span></h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="skills-container">
-       
-            <div class="skill html">
-                <div class="skill-icon">
-                    <i class="fab fa-html5"></i>
-                </div>
-                <h3>HTML</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 87%;"></div>
-                </div>
-            </div>
-            <div class="skill css">
-                <div class="skill-icon">
-                    <i class="fab fa-css3"></i>
-                </div>
-                <h3>CSS</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 85%;"></div>
+                <div class="code-window reveal" role="figure" aria-label="Code sample describing Joshua">
+                    <div class="code-titlebar">
+                        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+                        <span class="code-filename">engineer.ts</span>
+                    </div>
+<pre class="code-body"><code><span class="ln"><span class="tk-c">// who I am, typed</span></span>
+<span class="ln"><span class="tk-k">export const</span> <span class="tk-v">engineer</span> = {</span>
+<span class="ln">  name: <span class="tk-s">"Joshua Chilapondwa"</span>,</span>
+<span class="ln">  role: <span class="tk-s">"Full-Stack Software Engineer"</span>,</span>
+<span class="ln">  base: <span class="tk-s">"Lilongwe, Malawi"</span>,</span>
+<span class="ln">  stack: [<span class="tk-s">"TypeScript"</span>, <span class="tk-s">"Next.js"</span>, <span class="tk-s">"PostgreSQL"</span>,</span>
+<span class="ln">          <span class="tk-s">"React Native"</span>, <span class="tk-s">"C++/Qt"</span>],</span>
+<span class="ln">  shipping: [<span class="tk-s">"PharmaStore"</span>, <span class="tk-s">"Omnipane"</span>],</span>
+<span class="ln">  openToWork: <span class="tk-n">true</span>,</span>
+<span class="ln">} <span class="tk-k">satisfies</span> <span class="tk-t">Engineer</span>;<span class="caret"></span></span></code></pre>
                 </div>
             </div>
-            <div class="skill js">
-                <div class="skill-icon">
-                    <i class="fab fa-js"></i>
-                </div>
-                <h3>JAVASCRIPT</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 35%;"></div>
-                </div>
-            </div>
-            <div class="skill bootstrap">
-                <div class="skill-icon">
-                    <i class="fab fa-bootstrap"></i>
-                </div>
-                <h3>BOOTSTRAP</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 60%;"></div>
-                </div>
-            </div>
-            <div class="skill python">
-                <div class="skill-icon">
-                    <i class="fab fa-python"></i>
-                </div>
-                <h3>PYTHON</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 80%;"></div>
-                </div>
-            </div>
-            <div class="skill flutter">
-                <div class="skill-icon">
-                    <i class="fab fa-flutter"></i>
-                </div>
-                <h3>FLUTTER</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 95%;"></div>
-                </div>
-            </div>
-            <div class="skill java">
-                <div class="skill-icon">
-                    <i class="fab fa-java"></i>
-                </div>
-                <h3>JAVA</h3>
-                <div class="progress-container">
-                    <div class="progress-bar" style="--progress: 30%;"></div>
-                </div>
-            </div>
-           
-        </div>
-    </section>
+            <a href="#about" class="scroll-hint" aria-label="Scroll to about">
+                <span>scroll</span><i class="fas fa-chevron-down"></i>
+            </a>
+        </section>
 
- 
-    <section class="projects-section" id="projects">
-        <div class="section-header">
-            <h2>My <span>Projects</span></h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="projects-container">
-           
-            <div class="project-card">
-                <div class="project-image-container">
-                    <img src="../assets/images/dyuni.jpeg" alt="Project 1" class="project-image">
-                    <div class="project-overlay">
-                        <h3>Student Portal</h3>
-                        <p>Developed a web based student portal for Daeyang University.</p>
+        <!-- About -->
+        <section class="section" id="about" data-section="1">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-index">01</span>
+                    <h2>About</h2>
+                </div>
+                <div class="about-grid">
+                    <figure class="about-photo reveal">
+                        <img src="assets/images/josh.jpeg" alt="Portrait of Joshua Chilapondwa" loading="lazy" width="420" height="420">
+                    </figure>
+                    <div class="about-copy reveal">
+                        <p>
+                            Most of my work today is in <strong>TypeScript</strong>: full-stack platforms on Next.js,
+                            Prisma and PostgreSQL, built for real organisations, from pharmacies and multi-vendor
+                            marketplaces to creative agencies. I handle the whole path: data modelling, auth and
+                            role-based access, APIs, dashboards and analytics, then deployment on Vercel.
+                        </p>
+                        <p>
+                            I started out with Flutter and Python, picked up React Native and Expo for mobile, and
+                            more recently went lower-level with <strong>C++ and Qt 6</strong> to ship Omnipane, a
+                            native Windows launcher with its own installer and test suite.
+                        </p>
+                        <p>
+                            I care about software that's fast, accessible and easy to operate once it's in people's hands.
+                        </p>
+                        <ul class="facts">
+                            <li><i class="fas fa-location-dot"></i><span><b>Based in</b> Lilongwe, Malawi</span></li>
+                            <li><i class="fas fa-layer-group"></i><span><b>Focus</b> Full-stack web · Mobile · Desktop</span></li>
+                            <li><i class="fas fa-code-branch"></i><span><b>Now building</b> PharmaStore &amp; Omnipane</span></li>
+                        </ul>
+                        <div class="socials">
+                            <a href="https://github.com/Joshypeace" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/joshua-chilapondwa-20b778294" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://wa.me/265985975835" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://www.instagram.com/josh_ypeace" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/share/18tTw2BFbB/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        </div>
                     </div>
                 </div>
-                <div class="project-content">
-                    <div class="project-links">
-                    
-                        <a href="https://github.com/Joshypeace/DyuniPortal" class="project-btn">
-                            <i class="fab fa-github"></i> GitHub
+            </div>
+        </section>
+
+        <!-- GitHub stats -->
+        <section class="section" id="github" data-section="2">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-index">02</span>
+                    <h2>By the numbers</h2>
+                    <p class="section-sub">Drawn from my public GitHub repositories. Profile figures update live.</p>
+                </div>
+
+                <div class="gh-grid">
+                    <div class="panel gh-languages reveal">
+                        <div class="panel-head">
+                            <h3><i class="fas fa-code"></i> Languages by code volume</h3>
+                            <span class="muted mono" id="langTotal">4.6 MB of source</span>
+                        </div>
+                        <div class="lang-bar" id="langBar" role="img" aria-label="Language share bar"></div>
+                        <ul class="lang-legend" id="langLegend"></ul>
+                        <p class="footnote">Bytes per language across all public, non-fork repos, as reported by GitHub. Snapshot: October 2026.</p>
+                    </div>
+
+                    <div class="panel gh-profile reveal">
+                        <div class="panel-head">
+                            <h3><i class="fab fa-github"></i> Profile</h3>
+                            <a class="muted mono link" href="https://github.com/Joshypeace" target="_blank" rel="noopener">@Joshypeace</a>
+                        </div>
+                        <div class="kpis">
+                            <div class="kpi"><span class="kpi-value" data-stat="repos">16</span><span class="kpi-label">Public repos</span></div>
+                            <div class="kpi"><span class="kpi-value" data-stat="followers">4</span><span class="kpi-label">Followers</span></div>
+                            <div class="kpi"><span class="kpi-value">7</span><span class="kpi-label">TypeScript repos</span></div>
+                            <div class="kpi"><span class="kpi-value">3</span><span class="kpi-label">Platforms: web, mobile, desktop</span></div>
+                        </div>
+                        <h4 class="mini-head">Recently pushed</h4>
+                        <ul class="recent" id="recentRepos">
+                            <li><a href="https://github.com/Joshypeace/OmniPane" target="_blank" rel="noopener"><span class="lang-dot" style="--c:#f34b7d"></span>OmniPane</a><span class="muted">C++</span></li>
+                            <li><a href="https://github.com/Joshypeace/PharmaStore" target="_blank" rel="noopener"><span class="lang-dot" style="--c:#3178c6"></span>PharmaStore</a><span class="muted">TypeScript</span></li>
+                            <li><a href="https://github.com/Joshypeace/MedTrack" target="_blank" rel="noopener"><span class="lang-dot" style="--c:#3178c6"></span>MedTrack</a><span class="muted">TypeScript</span></li>
+                            <li><a href="https://github.com/Joshypeace/Portal" target="_blank" rel="noopener"><span class="lang-dot" style="--c:#3178c6"></span>Portal</a><span class="muted">TypeScript</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stack -->
+        <section class="section" id="stack" data-section="3">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-index">03</span>
+                    <h2>Stack</h2>
+                    <p class="section-sub">The tools I reach for, every one used in a shipped project below.</p>
+                </div>
+                <div class="stack-grid">
+                    <article class="panel stack-card reveal">
+                        <h3><i class="fas fa-terminal"></i> Languages</h3>
+                        <ul class="chips">
+                            <li>TypeScript</li><li>JavaScript</li><li>C++</li><li>Dart</li>
+                            <li>Python</li><li>SQL / PL/pgSQL</li><li>C</li><li>HTML &amp; CSS</li>
+                        </ul>
+                    </article>
+                    <article class="panel stack-card reveal">
+                        <h3><i class="fas fa-window-maximize"></i> Frontend</h3>
+                        <ul class="chips">
+                            <li>React</li><li>Next.js (App Router)</li><li>Tailwind CSS</li><li>shadcn/ui · Radix</li>
+                            <li>React Hook Form + Zod</li><li>Recharts</li><li>Framer Motion</li><li>SWR</li>
+                        </ul>
+                    </article>
+                    <article class="panel stack-card reveal">
+                        <h3><i class="fas fa-database"></i> Backend &amp; data</h3>
+                        <ul class="chips">
+                            <li>Node.js</li><li>Next.js Route Handlers</li><li>Express</li><li>PostgreSQL</li>
+                            <li>Prisma ORM</li><li>Supabase</li><li>Firebase</li><li>SQLite</li><li>NextAuth / Auth.js</li>
+                        </ul>
+                    </article>
+                    <article class="panel stack-card reveal">
+                        <h3><i class="fas fa-mobile-screen"></i> Mobile</h3>
+                        <ul class="chips">
+                            <li>React Native</li><li>Expo Router</li><li>TanStack Query</li><li>Flutter</li><li>Reanimated</li>
+                        </ul>
+                    </article>
+                    <article class="panel stack-card reveal">
+                        <h3><i class="fas fa-microchip"></i> Desktop &amp; systems</h3>
+                        <ul class="chips">
+                            <li>Qt 6</li><li>CMake</li><li>Win32 / DWM</li><li>Qt Test · CTest</li><li>WiX installers</li>
+                        </ul>
+                    </article>
+                    <article class="panel stack-card reveal">
+                        <h3><i class="fas fa-cloud"></i> Cloud &amp; integrations</h3>
+                        <ul class="chips">
+                            <li>Vercel</li><li>Git &amp; GitHub</li><li>Cloudinary</li><li>Google Maps API</li>
+                            <li>Africa's Talking SMS</li><li>reCAPTCHA</li><li>Postman</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work -->
+        <section class="section" id="work" data-section="4">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-index">04</span>
+                    <h2>Selected work</h2>
+                    <p class="section-sub">Production systems and tools I designed and built end to end.</p>
+                </div>
+
+                <div class="projects">
+                    <article class="project featured reveal">
+                        <div class="project-meta">
+                            <span class="tag tag-accent">Senior project</span>
+                            <span class="tag">Web platform</span>
+                            <span class="tag live"><span class="status-dot"></span> Live</span>
+                        </div>
+                        <h3>PharmaStore</h3>
+                        <p class="project-summary">
+                            A pharmacy management system and public medicine-availability search for Malawi. Two audiences share one database:
+                        </p>
+                        <ul class="project-points">
+                            <li><b>Customers</b> search by brand, generic or local name, see which nearby pharmacies have it in stock with prices and opening hours, and reserve it for pickup.</li>
+                            <li><b>Pharmacies</b> run their dispensary on it: batch-level stock, point of sale, prescriptions, demand forecasting, expiry control, reordering and procurement.</li>
+                        </ul>
+                        <ul class="tech">
+                            <li>Next.js</li><li>TypeScript</li><li>PostgreSQL</li><li>Prisma</li><li>NextAuth</li><li>Google Maps</li><li>Recharts</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://pharma-store-kappa.vercel.app" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live site <i class="fas fa-arrow-up-right-from-square"></i></a>
+                            <a href="https://github.com/Joshypeace/PharmaStore" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fab fa-github"></i> Source</a>
+                        </div>
+                    </article>
+
+                    <article class="project featured reveal">
+                        <div class="project-meta">
+                            <span class="tag tag-accent">Native desktop</span>
+                            <span class="tag">Windows</span>
+                        </div>
+                        <h3>Omnipane</h3>
+                        <p class="project-summary">
+                            A floating application launcher for Windows. Press <kbd>Ctrl</kbd>+<kbd>Space</kbd>, type a few letters, press <kbd>Enter</kbd>, and you're back to work.
+                        </p>
+                        <ul class="project-points">
+                            <li>Native Windows 11 acrylic window with DWM shadow and a spring-in animation that respects system motion settings.</li>
+                            <li>Instant ranked search across prefix, word-start and initials (<code>vsc</code> → Visual Studio Code), including Store app icons.</li>
+                            <li>Per-user MSI and portable builds, no admin rights needed, plus headless Qt Test suites run through CTest.</li>
+                        </ul>
+                        <ul class="tech">
+                            <li>C++</li><li>Qt 6</li><li>CMake</li><li>Win32 / DWM</li><li>WiX</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/Joshypeace/OmniPane" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fab fa-github"></i> Source</a>
+                        </div>
+                    </article>
+
+                    <article class="project reveal">
+                        <div class="project-meta"><span class="tag">Marketplace</span></div>
+                        <h3>Warm Heart of Malawi</h3>
+                        <p class="project-summary">
+                            A multi-vendor marketplace for Malawian crafts and produce, with separate customer, vendor, regional-admin and admin experiences: vendor approval, orders, analytics, wishlists, reviews and account recovery.
+                        </p>
+                        <ul class="tech"><li>Next.js</li><li>Prisma</li><li>PostgreSQL</li><li>NextAuth</li><li>SWR</li></ul>
+                        <div class="project-links">
+                            <a href="https://github.com/Joshypeace/WarmHeartOfMalawi" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fab fa-github"></i> Source</a>
+                        </div>
+                    </article>
+
+                    <article class="project reveal">
+                        <div class="project-meta"><span class="tag">Agency site + CMS</span><span class="tag live"><span class="status-dot"></span> Live</span></div>
+                        <h3>JayArts Multimedia</h3>
+                        <p class="project-summary">
+                            Website for a photography, videography and design agency, with an authenticated content dashboard, a rich-text editor, Cloudinary media handling, rate limiting and reCAPTCHA v3.
+                        </p>
+                        <ul class="tech"><li>Next.js</li><li>Prisma</li><li>PostgreSQL</li><li>Cloudinary</li><li>Framer Motion</li></ul>
+                        <div class="project-links">
+                            <a href="https://jay-arts-multimedia.vercel.app" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live site <i class="fas fa-arrow-up-right-from-square"></i></a>
+                            <a href="https://github.com/Joshypeace/JayArtsMultimedia" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fab fa-github"></i> Source</a>
+                        </div>
+                    </article>
+
+                    <article class="project reveal">
+                        <div class="project-meta"><span class="tag">Mobile app</span></div>
+                        <h3>HiveMaster Mobile</h3>
+                        <p class="project-summary">
+                            A beekeeping management app covering apiaries on a map, hive health, harvests, finances, tasks, notes, weather and reports, plus an admin area for users, devices and subscriptions.
+                        </p>
+                        <ul class="tech"><li>React Native</li><li>Expo Router</li><li>TypeScript</li><li>TanStack Query</li></ul>
+                        <div class="project-links">
+                            <a href="https://github.com/Joshypeace/HiveMasterMobile" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fab fa-github"></i> Source</a>
+                        </div>
+                    </article>
+
+                    <article class="project reveal">
+                        <div class="project-meta"><span class="tag">Web platform</span><span class="tag live"><span class="status-dot"></span> Live</span></div>
+                        <h3>MedTrack</h3>
+                        <p class="project-summary">
+                            A pharmaceutical store management system for inventory, sales and reporting, exported to PDF and Excel. It was the groundwork for PharmaStore.
+                        </p>
+                        <ul class="tech"><li>Next.js</li><li>Prisma</li><li>Supabase</li><li>NextAuth</li></ul>
+                        <div class="project-links">
+                            <a href="https://med-track-five.vercel.app" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live site <i class="fas fa-arrow-up-right-from-square"></i></a>
+                            <a href="https://github.com/Joshypeace/MedTrack" target="_blank" rel="noopener" class="btn btn-ghost btn-sm"><i class="fab fa-github"></i> Source</a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="more-work reveal">
+                    <h3 class="mini-head">More on GitHub</h3>
+                    <ul class="more-list">
+                        <li>
+                            <a href="https://github.com/Joshypeace/Portal" target="_blank" rel="noopener">
+                                <span class="more-title"><span class="lang-dot" style="--c:#3178c6"></span>Portal</span>
+                                <span class="more-desc">Student management portal: Next.js + Firebase</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Joshypeace/shakira-portfolio-frontend" target="_blank" rel="noopener">
+                                <span class="more-title"><span class="lang-dot" style="--c:#f1e05a"></span>Shakirah Portfolio</span>
+                                <span class="more-desc">Client site with an Express + SQLite API and SMS alerts via Africa's Talking</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Joshypeace/music_player_flutter" target="_blank" rel="noopener">
+                                <span class="more-title"><span class="lang-dot" style="--c:#00b4ab"></span>Music Player</span>
+                                <span class="more-desc">Local audio player built with Flutter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Joshypeace/my-airtel-app-clone-flutter" target="_blank" rel="noopener">
+                                <span class="more-title"><span class="lang-dot" style="--c:#00b4ab"></span>Airtel App Clone</span>
+                                <span class="more-desc">Mobile money UI study in Flutter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Joshypeace/receipt-generator-project" target="_blank" rel="noopener">
+                                <span class="more-title"><span class="lang-dot" style="--c:#3572a5"></span>Receipt Generator</span>
+                                <span class="more-desc">Python web receipt tool built for LetsGoTravel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section" id="contact" data-section="5">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="section-index">05</span>
+                    <h2>Let's build something</h2>
+                    <p class="section-sub">Have a project, a role or an idea? Send me a message and I'll get back to you.</p>
+                </div>
+                <div class="contact-grid">
+                    <form class="panel contact-form reveal" id="contactForm" action="https://formspree.io/f/xwplalqp" method="POST">
+                        <div class="field-row">
+                            <label class="field">
+                                <span>Name</span>
+                                <input type="text" name="name" autocomplete="name" required>
+                            </label>
+                            <label class="field">
+                                <span>Email</span>
+                                <input type="email" name="email" autocomplete="email" required>
+                            </label>
+                        </div>
+                        <label class="field">
+                            <span>Subject</span>
+                            <input type="text" name="subject" required>
+                        </label>
+                        <label class="field">
+                            <span>Message</span>
+                            <textarea name="message" rows="5" required></textarea>
+                        </label>
+                        <button type="submit" class="btn btn-primary">Send message <i class="fas fa-paper-plane"></i></button>
+                        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+                    </form>
+
+                    <div class="contact-side reveal">
+                        <a class="panel contact-card" href="mailto:joshuachilapondwa2@gmail.com">
+                            <i class="fas fa-envelope"></i>
+                            <span><b>Email</b>joshuachilapondwa2@gmail.com</span>
                         </a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image-container">
-                    <img src="../assets/images/letsGo logo.jpeg" alt="Project 1" class="project-image">
-                    <div class="project-overlay">
-                        <h3>Receipt Generator</h3>
-                        <p>A simple web receipt generator developed for LetsGoTravel.</p>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <div class="project-links">
-                      
-                        <a href="https://github.com/Joshypeace/receipt-generator-project" class="project-btn">
-                            <i class="fab fa-github"></i> GitHub
+                        <a class="panel contact-card" href="https://wa.me/265985975835" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp"></i>
+                            <span><b>WhatsApp / Phone</b>+265 985 975 835</span>
                         </a>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="project-image-container">
-                    <img src="../assets/images/muse.jpg" alt="Project 1" class="project-image">
-                    <div class="project-overlay">
-                        <h3>Music Player</h3>
-                        <p>Created a local music player using flutter.</p>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <div class="project-links">
-                      
-                        <a href="https://github.com/Joshypeace/music_player_flutter" class="project-btn">
-                            <i class="fab fa-github"></i> GitHub
+                        <a class="panel contact-card" href="https://www.linkedin.com/in/joshua-chilapondwa-20b778294" target="_blank" rel="noopener">
+                            <i class="fab fa-linkedin-in"></i>
+                            <span><b>LinkedIn</b>Joshua Chilapondwa</span>
                         </a>
+                        <div class="panel contact-card static">
+                            <i class="fas fa-location-dot"></i>
+                            <span><b>Location</b>Lilongwe, Malawi · CAT (UTC+2)</span>
+                        </div>
                     </div>
                 </div>
             </div>
-           
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p class="mono muted">&copy; <span id="year">2026</span> Joshua Chilapondwa</p>
+            <p class="mono muted">Built by hand with HTML, CSS &amp; Three.js</p>
+            <a href="#home" class="to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
         </div>
-    </section>
+    </footer>
 
-  <!-- Contact Section -->
-<section class="contact-section" id="contact">
-    <div class="section-header">
-        <h2>Get In <span>Touch</span></h2>
-        <div class="section-divider"></div>
-        <p class="section-subtitle">Have a project in mind or want to collaborate? Feel free to reach out!</p>
-    </div>
-    
-    <div class="contact-container">
-        <!-- Contact Form -->
-        <div class="contact-form">
-            <form id="contactForm" action="https://formspree.io/f/xwplalqp" method="POST">
-                <div class="form-group">
-                    <input type="text" id="name" name="name" required>
-                    <label for="name">Your Name</label>
-                    <div class="underline"></div>
-                </div>
-                
-                <div class="form-group">
-                    <input type="email" id="email" name="email" required>
-                    <label for="email">Your Email</label>
-                    <div class="underline"></div>
-                </div>
-                
-                <div class="form-group">
-                    <input type="text" id="subject" name="subject" required>
-                    <label for="subject">Subject</label>
-                    <div class="underline"></div>
-                </div>
-                
-                <div class="form-group">
-                    <textarea id="message" name="message" rows="5" required></textarea>
-                    <label for="message">Your Message</label>
-                    <div class="underline"></div>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    Send Message
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-            
-            <div id="formStatus" class="form-status"></div>
-        </div>
-        
-        <!-- Contact Info -->
-        <div class="contact-info">
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="info-content">
-                    <h3>Email Me</h3>
-                    <a href="mailto:joshuachilapondwa2@gmail.com">joshuachilapondwa2@gmail.com</a>
-                </div>
-            </div>
-            
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-phone-alt"></i>
-                </div>
-                <div class="info-content">
-                    <h3>Call Me</h3>
-                    <a href="tel:+265 985 975 835">+265 985 975 835</a>
-                </div>
-            </div>
-            
-            <div class="info-card">
-                <div class="info-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="info-content">
-                    <h3>Location</h3>
-                    <p>Lilongwe, Malawi</p>
-                </div>
-            </div>
-            
-            <div class="social-media">
-                <h3>Connect With Me</h3>
-                <div class="social-links">
-                    <a href="https://wa.me/265985975835" target="blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
-
-                    <a href="https://github.com/Joshypeace" target="blank" class="social-icon" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/joshua-chilapondwa-20b778294?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="blank" class="social-icon" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="https://www.facebook.com/share/18tTw2BFbB/" target="blank" class="social-icon" aria-label="Facebook">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/josh_ypeace?igsh=NTM0YXVtNnM3eTg3" target="blank" class="social-icon" aria-label="Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-    <p>I thrive on turning ideas into reality and am always exploring new 
-        technologies to enhance my craft. Let's connect and build something amazing!</p>
-    <p>&copy; <span id="year"></span> Josh Chilapondwa. All Rights Reserved.</p>
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-</footer>
-
-
-
-
-   
-    <div id="sideMenu" class="side-menu">
-        <span class="close-btn" onclick="toggleMenu()">&times;</span>
-        <div class="side-menu-theme-toggle">
-        <span>Dark Mode</span>
-        <label class="theme-switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-        </label>
-        </div>
-        <a href="#about" onclick="toggleMenu()">About</a>
-        <a href="#skills" onclick="toggleMenu()">Skills</a>
-        <a href="#projects" onclick="toggleMenu()">Projects</a>
-        <a href="#contact" onclick="toggleMenu()">Contact</a>
-    </div>
-    
-    <script src="https://kit.fontawesome.com/d3233c583a.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="js/main.js" defer></script>
+    <script type="module" src="js/background.js"></script>
 </body>
 </html>

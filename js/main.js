@@ -1,405 +1,241 @@
-// Navbar Scroll Effect
-window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar-custom');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
+// Page behaviour: navigation, reveal-on-scroll, GitHub stats and the contact form.
+// The 3D background lives in background.js.
+
+(function () {
+    const GITHUB_USER = 'Joshypeace';
+
+    // Bytes per language across public, non-fork repos (GitHub /languages API), October 2026.
+    // Kept static because fetching every repo's languages would burn the anonymous rate limit.
+    const LANGUAGES = [
+        { name: 'TypeScript', bytes: 3959742, color: '#3178c6' },
+        { name: 'C++', bytes: 189526, color: '#f34b7d' },
+        { name: 'Dart', bytes: 143669, color: '#00b4ab' },
+        { name: 'CSS', bytes: 94541, color: '#663399' },
+        { name: 'HTML', bytes: 92483, color: '#e34c26' },
+        { name: 'JavaScript', bytes: 36830, color: '#f1e05a' },
+        { name: 'PL/pgSQL', bytes: 34648, color: '#336790' },
+        { name: 'Python', bytes: 19996, color: '#3572a5' },
+        { name: 'CMake', bytes: 18591, color: '#da3434' },
+        { name: 'Other', bytes: 5110, color: '#64748b' } // Batchfile, C, Swift, Kotlin, Objective-C
+    ];
+
+    const LANGUAGE_COLORS = Object.fromEntries(LANGUAGES.map(l => [l.name, l.color]));
+
+    const nav = document.getElementById('nav');
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    // ---------- Navigation ----------
+
+    function onScroll() {
+        nav.classList.toggle('scrolled', window.scrollY > 24);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const behindMenu = [document.getElementById('main'), document.querySelector('.footer')];
+
+    function setMenu(open, { restoreFocus = false } = {}) {
+        const wasOpen = document.body.classList.contains('menu-open');
+        document.body.classList.toggle('menu-open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        // Keep keyboard focus inside the overlay while it covers the page.
+        behindMenu.forEach(el => { if (el) el.inert = open; });
+        if (open && !wasOpen) mobileMenu.querySelector('a').focus();
+        if (!open && wasOpen && restoreFocus) menuToggle.focus();
+    }
+
+    menuToggle.addEventListener('click', () => {
+        const open = !document.body.classList.contains('menu-open');
+        setMenu(open, { restoreFocus: !open });
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && document.body.classList.contains('menu-open')) setMenu(false, { restoreFocus: true });
+    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 860) setMenu(false); });
+
+    // Highlight the nav link of the section currently in view.
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+    const sections = navLinks
+        .map(a => document.querySelector(a.getAttribute('href')))
+        .filter(Boolean);
+
+    if ('IntersectionObserver' in window) {
+        const sectionObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const id = '#' + entry.target.id;
+                navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+            });
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        sections.forEach(s => sectionObserver.observe(s));
+    }
+
+    // ---------- Reveal on scroll ----------
+
+    const reveals = document.querySelectorAll('.reveal');
+
+    // Stagger siblings that share a parent so grids cascade in.
+    reveals.forEach(el => {
+        const siblings = Array.from(el.parentElement.children).filter(c => c.classList.contains('reveal'));
+        const index = siblings.indexOf(el);
+        if (index > 0) el.style.setProperty('--delay', Math.min(index * 0.08, 0.4) + 's');
+    });
+
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('in');
+                revealObserver.unobserve(entry.target);
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => revealObserver.observe(el));
     } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
-// explore my work
-
-function goToExplore(){
-    const myButton = document.getElementById('my_button');
-    myButton.addEventListener('click',()=>{
-        window.location.href = "./html/projects.html";
-    });
-    
-}
-
-// Mobile Menu Toggle
-function toggleMenu() {
-    const hamburger = document.querySelector('.hamburger');
-    const sideMenu = document.getElementById('sideMenu');
-    
-    hamburger.classList.toggle('active');
-    sideMenu.classList.toggle('open');
-    
-   
-    document.body.classList.toggle('no-scroll');
-}
-
-// Close menu when clicking on a link
-document.querySelectorAll('.side-menu a').forEach(link => {
-    link.addEventListener('click', toggleMenu);
-});
-
-// Intersection Observer for Animations
-const animateOnScroll = function() {
-    const elements = document.querySelectorAll('.skill, .project-card');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.2
-    });
-    
-    elements.forEach(element => {
-        observer.observe(element);
-    });
-};
-
-// Smooth Scrolling for Anchor Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 70,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    const skillsSection = document.querySelector('.skills-section');
-    const skills = document.querySelectorAll('.skill');
-    const progressBars = document.querySelectorAll('.progress-bar');
-    const projectCards = document.querySelectorAll('.project-card');
-
-    function isInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-            rect.top <= (window.innerHeight || document.documentElement.clientHeight)
-        );
+        reveals.forEach(el => el.classList.add('in'));
     }
 
-    function animateSections() {
-        // Animate Skills
-        if (skillsSection && isInViewport(skillsSection)) {
-            skillsSection.classList.add('show');
-            skills.forEach(skill => skill.classList.add('show'));
-            progressBars.forEach(bar => {
-                const progress = bar.style.getPropertyValue('--progress');
-                bar.style.width = progress;
-                bar.setAttribute('data-progress', progress);
-            });
-        }
+    // ---------- Language breakdown ----------
 
-        // Animate Projects
-        projectCards.forEach(card => {
-            if (isInViewport(card)) {
-                card.classList.add('show');
-            }
-        });
+    const langBar = document.getElementById('langBar');
+    const langLegend = document.getElementById('langLegend');
+    const langTotal = document.getElementById('langTotal');
+    const totalBytes = LANGUAGES.reduce((sum, l) => sum + l.bytes, 0);
+
+    function formatPercent(bytes) {
+        const pct = (bytes / totalBytes) * 100;
+        return pct >= 10 ? pct.toFixed(1) + '%' : pct >= 0.1 ? pct.toFixed(2) + '%' : '<0.1%';
     }
 
-    window.addEventListener('scroll', animateSections);
-    animateSections(); // Run once on load
+    if (langBar && langLegend) {
+        langBar.innerHTML = LANGUAGES.map(l =>
+            `<span style="--c:${l.color};--w:${(l.bytes / totalBytes) * 100}%" title="${l.name} ${formatPercent(l.bytes)}"></span>`
+        ).join('');
+        langBar.setAttribute('aria-label', 'Language share: ' + LANGUAGES.map(l => `${l.name} ${formatPercent(l.bytes)}`).join(', '));
 
-    // Project card hover effect (safe)
-    projectCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            const overlay = this.querySelector('.project-overlay');
-            if (overlay) overlay.style.opacity = '1';
-        });
+        langLegend.innerHTML = LANGUAGES.map(l =>
+            `<li><span class="lang-dot" style="--c:${l.color}"></span><span class="lang-name">${l.name}</span><span class="lang-pct">${formatPercent(l.bytes)}</span></li>`
+        ).join('');
 
-        card.addEventListener('mouseleave', function() {
-            const overlay = this.querySelector('.project-overlay');
-            if (overlay) overlay.style.opacity = '0';
-        });
-    });
-});
+        if (langTotal) langTotal.textContent = (totalBytes / 1e6).toFixed(1) + ' MB of source';
 
-// Contact Form Submission
-const contactForm = document.getElementById('contactForm');
-const formStatus = document.getElementById('formStatus');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.innerHTML;
-        
-        // Show loading state
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitBtn.disabled = true;
-        
-        fetch(this.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                formStatus.textContent = 'Message sent successfully! I will get back to you soon.';
-                formStatus.classList.add('success');
-                contactForm.reset();
-            } else {
-                throw new Error('Network response was not ok');
-            }
-        })
-        .catch(error => {
-            formStatus.textContent = 'Oops! There was a problem sending your message. Please try again later.';
-            formStatus.classList.add('error');
-            console.error('Error:', error);
-        })
-        .finally(() => {
-            submitBtn.innerHTML = originalBtnText;
-            submitBtn.disabled = false;
-            formStatus.style.display = 'block';
-            
-            // Hide status message after 5 seconds
-            setTimeout(() => {
-                formStatus.style.display = 'none';
-                formStatus.classList.remove('success', 'error');
-            }, 5000);
-        });
-    });
-}
-
-// Back to Top Button
-const backToTopBtn = document.getElementById('backToTop');
-if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
-        } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
-        }
-    });
-}
-
-// Update copyright year
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// Add intersection observer for contact section
-const contactSection = document.querySelector('.contact-section');
-if (contactSection) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    observer.observe(contactSection);
-}
-
-
-// Explore my work
-
-// Filter Projects
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const projectItems = document.querySelectorAll('.project-item');
-    
-    // Filter projects based on category
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            
-            const filterValue = button.getAttribute('data-filter');
-            
-            // Filter projects
-            projectItems.forEach(item => {
-                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
+        if ('IntersectionObserver' in window) {
+            const barObserver = new IntersectionObserver(entries => {
+                if (entries.some(e => e.isIntersecting)) {
+                    langBar.classList.add('in');
+                    barObserver.disconnect();
                 }
-            });
-        });
-    });
-    
-    // Animate projects on scroll
-    const animateProjects = function() {
-        const projects = document.querySelectorAll('.project-item');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('show');
-                    }, index * 100);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        projects.forEach(project => {
-            observer.observe(project);
-        });
-    };
-    
-    // Initialize animations
-    animateProjects();
-    
-    // Back to Top Button
-    const backToTopBtn = document.getElementById('backToTop');
-    if (backToTopBtn) {
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.style.opacity = '1';
-                backToTopBtn.style.visibility = 'visible';
-            } else {
-                backToTopBtn.style.opacity = '0';
-                backToTopBtn.style.visibility = 'hidden';
+            }, { threshold: 0.4 });
+            barObserver.observe(langBar);
+        } else {
+            langBar.classList.add('in');
+        }
+    }
+
+    // ---------- Live GitHub profile ----------
+
+    function setStat(name, value) {
+        document.querySelectorAll(`[data-stat="${name}"]`).forEach(el => { el.textContent = value; });
+    }
+
+    function escapeHtml(text) {
+        return String(text).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    // Portfolio repos would only ever list themselves.
+    const HIDDEN_REPOS = ['joshypeace.github.io', 'joshua-chilapondwa-portfolio'];
+
+    function renderRecent(repos) {
+        const list = document.getElementById('recentRepos');
+        if (!list) return;
+        const recent = repos
+            .filter(r => !r.fork && !HIDDEN_REPOS.includes(r.name.toLowerCase()))
+            .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))
+            .slice(0, 4);
+        if (!recent.length) return;
+
+        list.innerHTML = recent.map(r => {
+            const lang = r.language || 'Other';
+            const color = LANGUAGE_COLORS[lang] || LANGUAGE_COLORS.Other;
+            return `<li><a href="${escapeHtml(r.html_url)}" target="_blank" rel="noopener"><span class="lang-dot" style="--c:${color}"></span>${escapeHtml(r.name)}</a><span class="muted">${escapeHtml(lang)}</span></li>`;
+        }).join('');
+    }
+
+    async function loadGitHub() {
+        const cacheKey = 'gh-profile-v2';
+        let data = null;
+
+        try {
+            const cached = JSON.parse(sessionStorage.getItem(cacheKey) || 'null');
+            if (cached && Date.now() - cached.at < 30 * 60 * 1000) data = cached;
+        } catch (e) { /* storage unavailable; fetch instead */ }
+
+        if (!data) {
+            const headers = { Accept: 'application/vnd.github+json' };
+            const [userRes, reposRes] = await Promise.all([
+                fetch(`https://api.github.com/users/${GITHUB_USER}`, { headers }),
+                fetch(`https://api.github.com/users/${GITHUB_USER}/repos?per_page=100&sort=pushed`, { headers })
+            ]);
+            if (!userRes.ok || !reposRes.ok) return; // keep the static fallback values
+
+            const user = await userRes.json();
+            const repos = await reposRes.json();
+            data = {
+                at: Date.now(),
+                user: { public_repos: user.public_repos, followers: user.followers, created_at: user.created_at },
+                repos: repos.map(r => ({ name: r.name, html_url: r.html_url, language: r.language, fork: r.fork, pushed_at: r.pushed_at }))
+            };
+            try { sessionStorage.setItem(cacheKey, JSON.stringify(data)); } catch (e) { /* ignore */ }
+        }
+
+        setStat('repos', data.user.public_repos);
+        setStat('followers', data.user.followers);
+        if (data.user.created_at) setStat('since', new Date(data.user.created_at).getFullYear());
+        renderRecent(data.repos);
+    }
+
+    loadGitHub().catch(() => { /* offline or rate limited: static values stay in place */ });
+
+    // ---------- Contact form ----------
+
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+
+    if (form) {
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            const button = form.querySelector('button[type="submit"]');
+            const label = button.innerHTML;
+
+            button.disabled = true;
+            button.innerHTML = 'Sending… <i class="fas fa-circle-notch fa-spin"></i>';
+            status.className = 'form-status';
+            status.textContent = '';
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { Accept: 'application/json' }
+                });
+                if (!res.ok) throw new Error('Request failed');
+                form.reset();
+                status.classList.add('success');
+                status.textContent = "Thanks! Your message is on its way. I'll get back to you soon.";
+            } catch (err) {
+                status.classList.add('error');
+                status.textContent = 'Something went wrong. Please email me directly at joshuachilapondwa2@gmail.com.';
+            } finally {
+                button.disabled = false;
+                button.innerHTML = label;
             }
         });
     }
-    
-    // Update copyright year
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    // Mobile menu toggle (reuse from main.js)
-    function toggleMenu() {
-        const hamburger = document.querySelector('.hamburger');
-        const sideMenu = document.getElementById('sideMenu');
-        
-        hamburger.classList.toggle('active');
-        sideMenu.classList.toggle('open');
-        document.body.classList.toggle('no-scroll');
-    }
-    
-    // Close menu when clicking on a link
-    document.querySelectorAll('.side-menu a').forEach(link => {
-        link.addEventListener('click', toggleMenu);
-    });
-});
 
+    // ---------- Footer ----------
 
-// RESPONSIVENESS
-
-function checkMobile() {
-    const isMobile = window.innerWidth <= 767;
-    const isLandscape = window.innerWidth > window.innerHeight;
-    
-    
-    if (isMobile) {
-        document.body.classList.add('mobile-view');
-        if (isLandscape) {
-            document.body.classList.add('landscape-mode');
-        } else {
-            document.body.classList.remove('landscape-mode');
-        }
-    } else {
-        document.body.classList.remove('mobile-view', 'landscape-mode');
-    }
-    
-    // Adjust hero section height in landscape
-    if (isMobile && isLandscape) {
-        const hero = document.querySelector('.hero');
-        if (hero) {
-            hero.style.minHeight = 'auto';
-            hero.style.padding = '40px 20px';
-        }
-    }
-}
-
-
-window.addEventListener('load', checkMobile);
-window.addEventListener('resize', checkMobile);
-
-
-function adjustScrollIndicator() {
-    const scrollIndicator = document.querySelector('.scroll-indicator');
-    if (scrollIndicator && window.innerWidth <= 767) {
-        scrollIndicator.style.bottom = '20px';
-    }
-}
-
-window.addEventListener('load', adjustScrollIndicator);
-window.addEventListener('resize', adjustScrollIndicator);
-
-// Theme Toggle Functionality
-const themeToggle = document.querySelector('.theme-toggle');
-const themeSwitch = document.querySelector('.theme-switch input');
-
-// Check for saved theme preference or use preferred color scheme
-function loadTheme() {
-    const savedTheme = localStorage.getItem('theme') || 
-                      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-    if (themeSwitch) themeSwitch.checked = savedTheme === 'dark';
-    updateThemeIcon();
-}
-
-// Update theme toggle icon
-function updateThemeIcon() {
-    const isDark = document.body.classList.contains('dark-mode');
-    const moonIcon = document.querySelector('.theme-toggle .fa-moon');
-    const sunIcon = document.querySelector('.theme-toggle .fa-sun');
-    
-    if (moonIcon && sunIcon) {
-        moonIcon.style.opacity = isDark ? '0' : '1';
-        moonIcon.style.transform = isDark ? 'rotate(-90deg)' : 'rotate(0)';
-        sunIcon.style.opacity = isDark ? '1' : '0';
-        sunIcon.style.transform = isDark ? 'rotate(0)' : 'rotate(90deg)';
-    }
-}
-
-// ====================DARK MODE===============================
-
-// Toggle theme
-function toggleTheme() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    updateThemeIcon();
-}
-
-// Event listeners
-if (themeToggle) {
-    themeToggle.addEventListener('click', toggleTheme);
-}
-
-if (themeSwitch) {
-    themeSwitch.addEventListener('change', toggleTheme);
-}
-
-// Initialize theme on load
-document.addEventListener('DOMContentLoaded', loadTheme);
-
-// Listen for system theme changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!localStorage.getItem('theme')) {
-        loadTheme();
-    }
-});
+    const year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
+})();
