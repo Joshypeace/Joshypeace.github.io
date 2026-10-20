@@ -929,7 +929,7 @@ code {
 
 .projects {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
 }
 
@@ -937,7 +937,7 @@ code {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: clamp(22px, 3vw, 32px);
+    padding: 22px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--surface);
@@ -960,12 +960,6 @@ code {
 .project:hover { border-color: var(--border-strong); transform: translateY(-4px); }
 .project:hover::before { opacity: 1; }
 
-.project.featured {
-    background:
-        radial-gradient(circle at 100% 0%, rgba(34, 211, 238, 0.1), transparent 45%),
-        var(--surface);
-}
-.project.featured::before { opacity: 1; }
 
 .project-meta {
     display: flex;
@@ -991,7 +985,7 @@ code {
 .tag .status-dot { width: 6px; height: 6px; }
 
 .project h4 {
-    font-size: clamp(1.3rem, 2.4vw, 1.6rem);
+    font-size: 1.2rem;
     margin-bottom: 12px;
 }
 
@@ -1083,7 +1077,10 @@ code {
     padding-left: 20px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1000px) {
+    .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
     .projects { grid-template-columns: minmax(0, 1fr); }
 }
 
@@ -1231,7 +1228,8 @@ code {
 }
 
 .client-body .project-meta { margin-bottom: 14px; }
-.client-body .project-summary { font-size: 0.94rem; }
+.client-body .project-summary,
+.project .project-summary { font-size: 0.94rem; }
 
 .client-link {
     display: inline-flex;
@@ -1247,35 +1245,8 @@ code {
 .client-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .client-link i { font-size: 0.72rem; }
 
-/* The flagship project gets a wide, side-by-side card. */
-.client-featured {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    background:
-        radial-gradient(circle at 100% 0%, rgba(34, 211, 238, 0.1), transparent 45%),
-        var(--surface);
-}
-.client-featured .client-shot {
-    flex: 0 0 52%;
-    align-self: center;
-    border-bottom: 0;
-    border-right: 1px solid var(--border);
-}
-.client-featured .client-body { padding: clamp(22px, 3vw, 34px); }
-.client-featured h4 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
-
 @media (max-width: 1000px) {
     .clients { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 1000px) {
-    .client-featured { flex-direction: column; }
-    .client-featured .client-shot {
-        flex: none;
-        align-self: stretch;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-    }
 }
 
 @media (max-width: 620px) {
